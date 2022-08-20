@@ -34,9 +34,17 @@ func (n *AVLNode) rebalance() *AVLNode {
 	balance := n.balanceFactor()
 
 	if balance > 1 {
-		n.rotateRight()
+
+		if n.left.right.getDepth() > n.left.left.getDepth() {
+			n.left = n.left.rotateLeft()
+		}
+
+		return n.rotateRight()
 	} else if balance < -1 {
-		n.rotateLeft()
+		if n.right.left.getDepth() > n.right.right.getDepth() {
+			n.right = n.right.rotateRight()
+		}
+		return n.rotateLeft()
 	}
 
 	return n
